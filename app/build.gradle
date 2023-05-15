@@ -1,0 +1,95 @@
+plugins {
+    id 'com.android.application'
+}
+//apply plugin: 'com.google.gms.google-services'
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.gdrive.demo"
+        minSdkVersion 19
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        debug {
+            storeFile = file("../gdrivekeystore.jks")
+            storePassword = "Gdrive@2022"
+            keyAlias = "drive"
+            keyPassword = "Gdrive@2022"
+        }
+        release {
+            storeFile = file("../gdrivekeystore.jks")
+            storePassword = "Gdrive@2022"
+            keyAlias = "drive"
+            keyPassword = "Gdrive@2022"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    configurations {
+        all {
+            exclude group: 'commons-logging', module: 'commons-logging'
+            exclude group: 'org.apache.httpcomponents'
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'LICENSE.txt']
+        }
+    }
+    viewBinding {
+        enabled true
+    }
+
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // for runtime permission
+    implementation 'com.karumi:dexter:6.2.1'
+
+    //for top side toast, text with animation
+    implementation 'net.steamcrafted:load-toast:1.0.12'
+
+    //google auth
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.google.http-client:google-http-client-gson:1.26.0'
+    //google client api
+    implementation('com.google.api-client:google-api-client-android:1.26.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    //google services api
+    implementation('com.google.apis:google-api-services-drive:v3-rev136-1.25.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+}
