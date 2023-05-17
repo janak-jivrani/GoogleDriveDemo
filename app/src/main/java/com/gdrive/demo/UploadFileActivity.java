@@ -115,7 +115,7 @@ public class UploadFileActivity extends AppCompatActivity {
                 // Get the path
                 String selectedFilePath = null;
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                     // path could not be retrieved using ContentResolver, therefore copy file to accessible cache using streams
                     String fileName = FileUtils.getFileName(UploadFileActivity.this, selectedFileUri);
                     File cacheDir = FileUtils.getDocumentCacheDir(UploadFileActivity.this);
@@ -186,7 +186,7 @@ public class UploadFileActivity extends AppCompatActivity {
     }
 
     private void requestForStoragePermission() {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.Q) {
             String[] str = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 
             Dexter.withContext(this).withPermissions(str).withListener(new MultiplePermissionsListener() {
